@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dilema de Lucía</title>
+  <style>
+    body {
+      background: linear-gradient(to bottom, #dcecfb, #e6f2ff);
+      color: #2c3e50;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+      transition: background 1s ease;
+    }
+    .illustration {
+      max-width: 100%;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .story {
+      margin-bottom: 2rem;
+      white-space: pre-wrap;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    button {
+      background: linear-gradient(145deg, #cbe4f9, #a9d6e5);
+      color: #1f2d3d;
+      border: none;
+      padding: 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+      box-shadow: 2px 2px 6px #b0d0e3;
+    }
+    button:hover {
+      background: linear-gradient(145deg, #d5eafc, #bde0fe);
+      transform: scale(1.03);
+      box-shadow: 4px 4px 10px #b0d0e3;
+    }
+    button:active {
+      background: linear-gradient(145deg, #a8dadc, #cbe4f9);
+      transform: scale(0.98);
+    }
+    #musicControl {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: linear-gradient(145deg, #cbe4f9, #a9d6e5);
+      color: #1f2d3d;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 2px 2px 6px #b0d0e3;
+    }
+    #volumeControl {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      background: #ffffffcc;
+      padding: 0.5rem;
+      border-radius: 8px;
+      box-shadow: 1px 1px 6px #ccc;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    #volumeControl input[type='range'] {
+      width: 100px;
+    }
+    @keyframes fadeOutZoom {
+      to {
+        opacity: 0;
+        transform: scale(0.95);
+        visibility: hidden;
+      }
+    }
+    .fade-out {
+      opacity: 0 !important;
+      transition: opacity 0.5s ease;
+    }
+  </style>
+</head>
+<body>
+  <!-- conteúdo omitido por brevidade -->
+</body>
+</html>
