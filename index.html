@@ -6,7 +6,7 @@
   <title>Dilema de Lucía</title>
   <style>
     body {
-      background: linear-gradient(to bottom, #dcecfb, #e6f2ff);
+      background: linear-gradient(180deg, #e0f7fa 0%, #f1f8ff 100%) fixed;
       color: #2c3e50;
       font-family: 'Segoe UI', sans-serif;
       padding: 2rem;
@@ -51,47 +51,97 @@
       background: linear-gradient(145deg, #a8dadc, #cbe4f9);
       transform: scale(0.98);
     }
-    #musicControl {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: linear-gradient(145deg, #cbe4f9, #a9d6e5);
-      color: #1f2d3d;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      box-shadow: 2px 2px 6px #b0d0e3;
-    }
-    #volumeControl {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      background: #ffffffcc;
-      padding: 0.5rem;
-      border-radius: 8px;
-      box-shadow: 1px 1px 6px #ccc;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    #volumeControl input[type='range'] {
-      width: 100px;
-    }
-    @keyframes fadeOutZoom {
-      to {
-        opacity: 0;
-        transform: scale(0.95);
-        visibility: hidden;
-      }
-    }
-    .fade-out {
-      opacity: 0 !important;
-      transition: opacity 0.5s ease;
-    }
   </style>
 </head>
 <body>
-  <!-- conteúdo omitido por brevidade -->
+  <div class="story" id="story"></div>
+  <div class="choices" id="choices"></div>
+  <img id="illustration" class="illustration" src="" alt="Ilustración de la escena" style="display: none;">
+  <script>
+    const storyElement = document.getElementById("story");
+    const choicesElement = document.getElementById("choices");
+    const illustration = document.getElementById("illustration");
+
+    const narrativa = {
+      inicio: {
+        texto: "Lucía ha trabajado durante años en el área contable de una empresa multinacional. Siempre fue meticulosa, cumplidora y respetada por sus colegas. Sin embargo, en las últimas semanas, notó algo extraño: pequeñas discrepancias en los balances y movimientos sospechosos vinculados a su compañero Martín. No eran cifras grandes, pero sí constantes. Un día, al revisar con más detenimiento, descubrió que Martín desviaba pequeñas sumas para cubrir gastos médicos de su hijo enfermo. El dilema ahora recae sobre Lucía: ¿debe denunciarlo, encarar la situación directamente o permitir que todo siga su curso?",
+        imagen: "A_digital_illustration_depicts_a_contemplative_you.png",
+        opciones: [
+          { texto: "Reflexionar primero", siguiente: "reflexion" },
+          { texto: "Reportar a Recursos Humanos", siguiente: "reportar" },
+          { texto: "Confrontar a Martín", siguiente: "conversar" }
+        ]
+      },
+      reflexion: {
+        texto: "Te quedas sola frente al monitor. Piensas en la libertad, en la justicia, y en lo que significa realmente hacer lo correcto. La sala está en silencio, pero tu cabeza no. Te preguntas si lo que viste te obliga a actuar, si es un deber o una trampa de tu propia conciencia. ¿Quién eres tú para juzgar a Martín? Pero también, ¿quién serás si no haces nada? La silla te parece incómoda de repente. ¿Qué clase de persona decides ser?",
+        imagen: "A_digital_illustration_depicts_a_young_woman_with_.png",
+        opciones: [
+          { texto: "Hablar con Martín", siguiente: "conversar" },
+          { texto: "Reportarlo de todas formas", siguiente: "reportar" }
+        ]
+      },
+      reportar: {
+        texto: "Presentas el informe. Martín es despedido sin demasiadas preguntas. En los días siguientes, el ambiente en la oficina cambia: algunos te evitan, otros te miran con aprobación silenciosa. No hay una celebración, pero tampoco hay reproches directos. Sabés que lo que hiciste está en línea con las normas, pero te preguntas si esas normas contemplan todas las dimensiones humanas. La rutina continúa, pero algo en vos se siente distinto. Como si hubieras cruzado una línea que no admite regreso.",
+        imagen: "A_semi-realistic_digital_illustration_depicts_an_o.png",
+        opciones: [
+          { texto: "Volver al inicio", siguiente: "inicio" }
+        ]
+      },
+      conversar: {
+        texto: "Caminás hasta su escritorio. Martín te mira con ojos apagados, como si ya supiera que algo se rompió. Te invita a sentarte y, sin levantar la voz, te cuenta lo que pasa con su hijo. Su voz tiembla por momentos, pero no busca excusas. 'Sé que no está bien', dice, 'pero ya no sabía qué más hacer'. Lo escuchás en silencio, sintiendo que no hay respuestas fáciles. No prometés nada. Salís de la conversación con más preguntas que certezas, pero con la sensación de que, al menos por hoy, elegiste mirar a otro ser humano a los ojos.",
+        imagen: "A_digital_illustration_depicts_Lucia,_a_light-skin.png",
+        opciones: [
+          { texto: "Volver al inicio", siguiente: "inicio" }
+        ]
+      }
+    };
+
+    function mostrarEscena(clave) {
+      const escena = narrativa[clave];
+      let i = 0;
+      storyElement.classList.add("fade-out");
+      setTimeout(() => {
+        storyElement.textContent = "";
+        storyElement.classList.remove("fade-out");
+        storyElement.style.opacity = 1;
+        if (escena.imagen) {
+          illustration.src = escena.imagen;
+          illustration.style.display = "block";
+        } else {
+          illustration.style.display = "none";
+        }
+        choicesElement.innerHTML = "";
+        function type() {
+          if (i < escena.texto.length) {
+            storyElement.textContent += escena.texto.charAt(i);
+            i++;
+            setTimeout(type, 25);
+          } else {
+            escena.opciones.forEach(opcion => {
+              const boton = document.createElement("button");
+              if (opcion.texto === "Reflexionar primero") {
+                boton.textContent = "Explorar tus dudas internas";
+              } else if (opcion.texto === "Reportar a Recursos Humanos") {
+                boton.textContent = "Actuar según las normas";
+              } else if (opcion.texto === "Confrontar a Martín") {
+                boton.textContent = "Buscar el rostro del otro";
+              } else if (opcion.texto === "Hablar con Martín") {
+                boton.textContent = "Abrir un diálogo humano";
+              } else if (opcion.texto === "Reportarlo de todas formas") {
+                boton.textContent = "Tomar una decisión legalista";
+              } else {
+                boton.textContent = opcion.texto;
+              }
+              boton.onclick = () => mostrarEscena(opcion.siguiente);
+              choicesElement.appendChild(boton);
+            });
+          }
+        }
+        type();
+      }, 500);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => mostrarEscena("inicio"));
+  </script>
 </body>
 </html>
